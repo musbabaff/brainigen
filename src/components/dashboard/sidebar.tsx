@@ -77,7 +77,7 @@ const SECTIONS = [
   },
 ];
 
-export function DashboardSidebar({ profile }: { profile: any }) {
+export function DashboardSidebar({ profile }: { profile: { plan?: string } | null }) {
   const pathname = usePathname();
   const stripped = pathname.replace(/^\/(en|tr|az|ru|de|fr|es|ar)/, '');
 

@@ -57,7 +57,7 @@ export function SearchModal({ open, onOpenChange }: { open: boolean, onOpenChang
           ) : results.length > 0 ? (
             <div className="space-y-1">
               {results.map((result, i) => (
-                <Link key={i} href={result.url as any} onClick={() => onOpenChange(false)}>
+                <Link key={i} href={result.url as React.ComponentProps<typeof Link>['href']} onClick={() => onOpenChange(false)}>
                   <div className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-accent/50 cursor-pointer transition-colors group">
                     <div className="h-8 w-8 rounded-lg bg-background/50 flex items-center justify-center shrink-0">
                       {getIcon(result.type)}

@@ -9,7 +9,7 @@ interface ThemedImageProps extends Omit<ImageProps, 'src'> {
   srcDark: string;
 }
 
-export function ThemedImage({ srcLight, srcDark, ...props }: ThemedImageProps) {
+export function ThemedImage({ srcLight, srcDark, alt, ...props }: ThemedImageProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -18,9 +18,9 @@ export function ThemedImage({ srcLight, srcDark, ...props }: ThemedImageProps) {
   }, []);
 
   if (!mounted) {
-    return <Image src={srcLight} {...props} />;
+    return <Image src={srcLight} alt={alt || ""} {...props} />;
   }
 
   const src = resolvedTheme === 'dark' ? srcDark : srcLight;
-  return <Image src={src} {...props} />;
+  return <Image src={src} alt={alt || ""} {...props} />;
 }

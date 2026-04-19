@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { DollarSign, TrendingUp, Download } from "lucide-react";
 import { mockRevenueData } from "@/lib/admin-mock-data";
 import {

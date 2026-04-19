@@ -102,7 +102,7 @@ export default function OnboardingPage() {
                     <div className="text-center py-12">
                       <h2 className="text-3xl font-bold mb-4">Welcome to Brainigen</h2>
                       <p className="text-muted-foreground max-w-md mx-auto">
-                        We're excited to have you on board. Let's configure your account so you can start building powerful AI agents in minutes.
+                        We&apos;re excited to have you on board. Let&apos;s configure your account so you can start building powerful AI agents in minutes.
                       </p>
                     </div>
                   )}

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Bot, User, Sparkles, Zap, MessageSquare } from 'lucide-react';
+import Link from 'next/link';
 
 type Message = { role: 'user' | 'assistant'; content: string };
 
@@ -232,12 +233,12 @@ export function DemoPageClient() {
 
       <div className="text-center mt-12">
         <p className="text-muted mb-4">Ready to build your own?</p>
-        <a
+        <Link
           href="/register"
           className="inline-flex items-center gap-2 h-11 px-6 bg-foreground text-background rounded-lg text-sm font-medium hover:bg-foreground/90"
         >
           Start free trial
-        </a>
+        </Link>
       </div>
     </div>
   );

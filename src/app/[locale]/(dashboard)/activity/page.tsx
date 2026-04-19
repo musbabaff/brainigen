@@ -13,7 +13,7 @@ const mockActivities = [
   { id: '4', type: 'payment_success', title: 'Subscription Renewed', time: '1 day ago', date: 'Yesterday' },
 ];
 
-const icons: Record<string, any> = {
+const icons: Record<string, React.ElementType> = {
   login: Activity,
   agent_created: Plus,
   settings_changed: CheckCircle2,

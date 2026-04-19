@@ -4,7 +4,7 @@ import { Bell, Search } from 'lucide-react';
 import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-export function DashboardTopbar({ user, profile }: { user: any; profile: any }) {
+export function DashboardTopbar({ user, profile }: { user: unknown; profile: { full_name?: string; avatar_url?: string } | null }) {
   const initials =
     profile?.full_name?.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase() || 'U';
 

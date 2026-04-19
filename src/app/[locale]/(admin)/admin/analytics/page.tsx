@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Activity, Globe, Cpu } from "lucide-react";
+import { Users, Activity, Globe } from "lucide-react";
 import { mockRevenueData } from "@/lib/admin-mock-data";
 import { ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 

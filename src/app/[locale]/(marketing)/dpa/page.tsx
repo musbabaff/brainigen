@@ -20,7 +20,7 @@ export default async function DPAPage() {
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">1. Definitions</h2>
-          <p>This Data Processing Agreement ("DPA") forms part of the Terms of Service. "Personal Data", "Data Controller", "Data Processor", "Data Subject" shall have the same meaning as in the General Data Protection Regulation (GDPR).</p>
+          <p>This Data Processing Agreement (&quot;DPA&quot;) forms part of the Terms of Service. &quot;Personal Data&quot;, &quot;Data Controller&quot;, &quot;Data Processor&quot;, &quot;Data Subject&quot; shall have the same meaning as in the General Data Protection Regulation (GDPR).</p>
         </section>
 
         <section className="mb-12">

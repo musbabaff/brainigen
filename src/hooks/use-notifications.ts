@@ -57,7 +57,7 @@ export function useNotifications() {
   useEffect(() => {
     if (!user) return;
 
-    // eslint-disable-next-line
+     
     fetchNotifications();
 
     const channel = supabase

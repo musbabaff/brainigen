@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 const TiptapEditor = dynamic(() => import("@/components/admin/TiptapEditor").then(mod => mod.TiptapEditor), {
   ssr: false,
@@ -13,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Globe, Image as ImageIcon, Plus, Save, Play, ExternalLink, Calendar, Key, AlertCircle } from "lucide-react";
+import { Globe, Image as ImageIcon, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -21,7 +20,6 @@ import { cn } from "@/lib/utils";
 const LANGUAGES = ["EN", "TR", "AZ", "RU", "DE", "FR", "ES", "AR"];
 
 export default function BlogPostEditor() {
-  const t = useTranslations("admin");
   const [activeLang, setActiveLang] = useState("EN");
   const [content, setContent] = useState<Record<string, string>>({});
   const [titles, setTitles] = useState<Record<string, string>>({});
