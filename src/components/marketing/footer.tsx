@@ -83,24 +83,24 @@ export function Footer() {
 
   const productLinks = [
     { label: t("product_features"), href: "/#services" },
-    { label: t("product_pricing"), href: "/#pricing" },
-    { label: t("product_docs"), href: "/#" },
-    { label: t("product_api"), href: "/#" },
-    { label: t("product_changelog"), href: "/#" },
+    { label: t("product_pricing"), href: "/pricing" },
+    { label: t("product_docs"), href: "/integrations" },
+    { label: t("product_api"), href: "/compare" },
+    { label: t("product_changelog"), href: "/changelog" },
   ];
 
   const companyLinks = [
-    { label: t("company_about"), href: "/#about" },
-    { label: t("company_blog"), href: "/#blog" },
-    { label: t("company_careers"), href: "/#" },
-    { label: t("company_contact"), href: "/#contact" },
-    { label: t("company_partners"), href: "/#" },
+    { label: t("company_about"), href: "/about" },
+    { label: t("company_blog"), href: "/blog" },
+    { label: t("company_careers"), href: "/careers" },
+    { label: t("company_contact"), href: "/contact" },
+    { label: t("company_partners"), href: "/customers" },
   ];
 
   const legalLinks = [
-    { label: t("legal_privacy"), href: "/#" },
-    { label: t("legal_terms"), href: "/#" },
-    { label: t("legal_cookies"), href: "/#" },
+    { label: t("legal_privacy"), href: "/privacy" },
+    { label: t("legal_terms"), href: "/terms" },
+    { label: t("legal_cookies"), href: "/cookies" },
   ];
 
   const socialLinks = [

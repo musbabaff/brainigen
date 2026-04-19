@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor, EditorContent, ReactNodeViewRenderer } from "@tiptap/react";
+import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -31,7 +31,7 @@ import {
   List, ListOrdered, CheckSquare, Quote, CodeSquare, Minus,
   AlignLeft, AlignCenter, AlignRight, AlignJustify,
   Link as LinkIcon, Image as ImageIcon, Table as TableIcon, Highlighter,
-  Palette, Maximize, Minimize, Undo, Redo
+  Maximize, Minimize, Undo, Redo
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 

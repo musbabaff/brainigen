@@ -11,6 +11,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact',
     '/services',
     '/case-studies',
+    '/about',
+    '/customers',
+    '/integrations',
+    '/compare',
+    '/solutions',
+    '/changelog',
+    '/security',
+    '/trust',
+    '/status',
+    '/careers',
     '/login',
     '/register'
   ];

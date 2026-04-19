@@ -7,24 +7,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { easings } from "@/lib/animations";
+import { Link } from "@/i18n/navigation";
+import { useState } from "react";
 
-const cardVariant = {
-  hidden: { opacity: 0, scale: 0.93, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.12,
-      duration: 0.6,
-      ease: easings.easeOutExpo,
-    },
-  }),
-};
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function PricingPreview() {
   const t = useTranslations("pricing");
+  const [annual, setAnnual] = useState(true);
 
   const plans = [
     {
@@ -62,27 +52,44 @@ export function PricingPreview() {
       <div className="container mx-auto px-4 md:px-6">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: easings.easeOutExpo }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5, ease }}
+          className="text-center mb-12"
         >
-          <motion.span
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-block text-xs font-semibold text-primary uppercase tracking-[0.2em] mb-4"
-          >
+          <span className="inline-block text-xs font-semibold text-primary uppercase tracking-[0.15em] mb-4">
             Pricing
-          </motion.span>
+          </span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-[-0.03em] mb-4">
             {t("title")}
           </h2>
-          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8">
             {t("subtitle")}
           </p>
+
+          {/* Annual/Monthly toggle */}
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-card p-1">
+            <button
+              onClick={() => setAnnual(false)}
+              className={cn(
+                "px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200",
+                !annual ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setAnnual(true)}
+              className={cn(
+                "px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200",
+                annual ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Annual
+              <span className="ml-1.5 text-xs text-primary font-semibold">-20%</span>
+            </button>
+          </div>
         </motion.div>
 
         {/* Pricing cards */}
@@ -90,31 +97,24 @@ export function PricingPreview() {
           {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
-              custom={i}
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="visible"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              whileHover={{ y: -6, transition: { duration: 0.3 } }}
+              transition={{ delay: i * 0.08, duration: 0.5, ease }}
             >
               <Card
                 className={cn(
-                  "h-full border-border/30 bg-card/50 backdrop-blur-sm transition-all duration-400 relative rounded-2xl overflow-hidden group",
-                  plan.popular && "border-primary/40 shadow-2xl shadow-primary/10 scale-[1.02]"
+                  "h-full border-border/50 bg-card transition-all duration-200 relative rounded-xl overflow-hidden",
+                  plan.popular && "border-primary/50 shadow-lg shadow-primary/5"
                 )}
               >
-                {/* Glow effect for popular plan */}
-                {plan.popular && (
-                  <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[200px] h-[200px] rounded-full bg-primary/10 blur-[80px] pointer-events-none" />
-                )}
-
                 {plan.badge && (
-                  <Badge className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground border-0 px-3 py-0.5 text-[11px] font-semibold shadow-lg shadow-primary/20 z-10">
+                  <Badge className="absolute top-4 right-4 bg-primary text-primary-foreground border-0 px-2.5 py-0.5 text-[11px] font-semibold z-10">
                     <Sparkles className="h-3 w-3 mr-1" />
                     {plan.badge}
                   </Badge>
                 )}
-                <CardHeader className="pb-4 pt-8 px-7">
+                <CardHeader className="pb-4 pt-7 px-7">
                   <p className="text-sm font-medium text-muted-foreground mb-3">{plan.name}</p>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold tracking-[-0.03em]">{plan.price}</span>
@@ -124,36 +124,27 @@ export function PricingPreview() {
                 </CardHeader>
                 <CardContent className="px-7 pb-7">
                   <ul className="space-y-3 mb-7">
-                    {plan.features.map((feature, fi) => (
-                      <motion.li
-                        key={feature}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: i * 0.12 + fi * 0.05,
-                          duration: 0.4,
-                          ease: easings.easeOutExpo,
-                        }}
-                        className="flex items-center gap-2.5 text-sm"
-                      >
-                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2.5 text-sm">
+                        <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 shrink-0">
                           <Check className="h-3 w-3 text-primary" />
                         </div>
                         <span className="text-muted-foreground">{feature}</span>
-                      </motion.li>
+                      </li>
                     ))}
                   </ul>
-                  <Button
-                    className={cn(
-                      "w-full h-11 text-sm font-medium cursor-pointer rounded-xl transition-all duration-300 active:scale-[0.98]",
-                      plan.popular
-                        ? "bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_2px_16px_rgba(91,79,233,0.3)] hover:shadow-[0_4px_24px_rgba(91,79,233,0.45)]"
-                        : "bg-secondary hover:bg-accent text-foreground hover:shadow-lg"
-                    )}
-                  >
-                    {plan.cta}
-                  </Button>
+                  <Link href="/register">
+                    <Button
+                      className={cn(
+                        "w-full h-11 text-sm font-medium cursor-pointer rounded-lg transition-colors duration-200",
+                        plan.popular
+                          ? "bg-primary hover:bg-primary/90 text-primary-foreground"
+                          : "bg-secondary hover:bg-accent text-foreground"
+                      )}
+                    >
+                      {plan.cta}
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </motion.div>
@@ -165,13 +156,13 @@ export function PricingPreview() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-center text-sm text-muted-foreground mt-12"
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="text-center text-sm text-muted-foreground mt-10"
         >
           {t("enterprise_text")}{" "}
-          <span className="text-primary hover:underline cursor-pointer font-medium transition-colors duration-200 hover:text-primary/80">
+          <Link href="/contact" className="text-primary hover:text-primary/80 font-medium transition-colors duration-200">
             {t("enterprise_link")}
-          </span>
+          </Link>
         </motion.p>
       </div>
     </section>
