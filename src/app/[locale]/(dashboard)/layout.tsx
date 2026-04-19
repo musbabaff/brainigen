@@ -105,13 +105,13 @@ function SidebarContent({ onNavClick }: { onNavClick?: () => void }) {
         <div className="flex items-center gap-3 px-2 py-2">
           <Avatar className="h-8 w-8">
             <AvatarFallback className="bg-primary/10 text-primary text-xs font-semibold">
-              JD
+              U
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium truncate">John Doe</p>
+            <p className="text-sm font-medium truncate">My Account</p>
             <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 font-medium border-primary/30 text-primary">
-              Starter
+              Free
             </Badge>
           </div>
         </div>
@@ -206,7 +206,7 @@ export default function DashboardLayout({
             {/* Mobile avatar */}
             <Avatar className="h-7 w-7 lg:hidden">
               <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-semibold">
-                JD
+                U
               </AvatarFallback>
             </Avatar>
           </div>

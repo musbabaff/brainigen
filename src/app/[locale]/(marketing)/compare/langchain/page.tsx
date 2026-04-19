@@ -6,11 +6,11 @@ import { Link } from '@/i18n/navigation';
 import { ArrowRight } from 'lucide-react';
 
 export const metadata = {
-  title: 'Careers | Brainigen',
-  description: 'Learn more about Careers with Brainigen.',
+  title: 'vs LangChain | Brainigen',
+  description: 'Learn more about vs LangChain with Brainigen.',
 };
 
-export default function CareersPage({ params }: { params: Promise<{ locale: string }> }) {
+export default function vsLangChainPage({ params }: { params: Promise<{ locale: string }> }) {
   // Use promise resolving for params in Next 15
   return (
     <Content localePromise={params} />
@@ -31,7 +31,7 @@ async function Content({ localePromise }: { localePromise: Promise<{ locale: str
           
           <div className="container-narrow relative z-10 text-center">
             <h1 className="text-display mb-6 tracking-tight">
-              Careers
+              vs LangChain
             </h1>
             <p className="text-lead max-w-2xl mx-auto mb-10 text-muted-foreground">
               Explore our comprehensive features and enterprise-grade infrastructure.

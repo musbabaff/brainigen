@@ -122,11 +122,11 @@
    DARK MODE — Linear-inspired true dark
    ═══════════════════════════════════════════════════════ */
 .dark {
-  --background: #0E0E11;
+  --background: #08090B;
   --foreground: #FAFAFA;
-  --card: #141418;
+  --card: #121316;
   --card-foreground: #FAFAFA;
-  --popover: #141418;
+  --popover: #121316;
   --popover-foreground: #FAFAFA;
   --primary: #5B4FE9;
   --primary-foreground: #FFFFFF;
@@ -137,8 +137,8 @@
   --accent: #1C1C22;
   --accent-foreground: #FAFAFA;
   --destructive: #EF4444;
-  --border: #27272E;
-  --input: #27272E;
+  --border: #1E1F24;
+  --input: #1E1F24;
   --ring: #5B4FE9;
 
   /* Brand */
@@ -158,13 +158,13 @@
   --chart-5: #EF4444;
 
   /* Sidebar */
-  --sidebar: #141418;
+  --sidebar: #08090B;
   --sidebar-foreground: #FAFAFA;
   --sidebar-primary: #5B4FE9;
   --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: #1C1C22;
   --sidebar-accent-foreground: #FAFAFA;
-  --sidebar-border: #27272E;
+  --sidebar-border: #1E1F24;
   --sidebar-ring: #5B4FE9;
 }
 

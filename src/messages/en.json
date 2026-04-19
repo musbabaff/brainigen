@@ -225,5 +225,107 @@
     "bot_name": "Nova",
     "status_online": "Online",
     "powered_by": "Powered by Brainigen AI"
+  },
+  "product_overview": {
+    "title": "The complete AI agent platform",
+    "subtitle": "Build, deploy, and manage AI agents that actually work.",
+    "cta": "See it in action",
+    "features": {
+      "agents": {
+        "title": "AI Agents",
+        "desc": "Customizable chatbots and assistants"
+      },
+      "knowledge": {
+        "title": "Knowledge Base",
+        "desc": "RAG on your company data"
+      },
+      "voice": {
+        "title": "Voice Agents",
+        "desc": "AI that answers your phone"
+      },
+      "api": {
+        "title": "Developer API",
+        "desc": "Integrate anywhere"
+      },
+      "integrations": {
+        "title": "Integrations",
+        "desc": "Connects to your stack"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "desc": "Deep performance insights"
+      }
+    }
+  },
+  "product_agents": {
+    "title": "Build agents in minutes",
+    "subtitle": "No code required. Just define your goal and let Brainigen handle the rest.",
+    "steps": [
+      "Define Role",
+      "Upload Knowledge",
+      "Set Guardrails",
+      "Deploy"
+    ],
+    "types": [
+      "Customer Support",
+      "Sales Development",
+      "Data Analysis",
+      "Internal IT Helpdesk"
+    ]
+  },
+  "product_knowledge": {
+    "title": "Ground your agents in your data",
+    "subtitle": "Upload PDFs, Word docs, or connect to Notion and Google Drive.",
+    "security": "Enterprise-grade security. SOC2 Type II compliant."
+  },
+  "product_voice": {
+    "title": "AI that answers your phone",
+    "badge": "NEW",
+    "subtitle": "Voice agents with sub-500ms latency powered by ElevenLabs.",
+    "use_cases": [
+      "Call Centers",
+      "Appointment Booking",
+      "Outbound Sales"
+    ]
+  },
+  "solutions_support": {
+    "title": "Deflect 70% of support tickets",
+    "subtitle": "Resolve customer issues instantly across all channels."
+  },
+  "solutions_sales": {
+    "title": "Never lose a lead again",
+    "subtitle": "AI SDRs that qualify leads and book meetings 24/7."
+  },
+  "compare": {
+    "title": "Compare Brainigen",
+    "subtitle": "See how we stack up against the competition.",
+    "openai": {
+      "title": "vs OpenAI Assistants",
+      "desc": "Why Brainigen is better for production"
+    },
+    "langchain": {
+      "title": "vs LangChain",
+      "desc": "Platform vs Library"
+    },
+    "inhouse": {
+      "title": "vs Building In-House",
+      "desc": "The true cost of DIY"
+    }
+  },
+  "trust": {
+    "title": "Built on trust",
+    "subtitle": "Enterprise-grade security, privacy, and compliance.",
+    "security": {
+      "title": "Security",
+      "desc": "AES-256, TLS 1.3, SOC2"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "desc": "GDPR & CCPA compliant"
+    },
+    "status": {
+      "title": "System Status",
+      "desc": "Real-time uptime metrics"
+    }
   }
 }
