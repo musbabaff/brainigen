@@ -343,3 +343,96 @@ input, textarea { cursor: text; }
   background: rgba(91, 79, 233, 0.2);
   color: inherit;
 }
+
+/* ═══════════════════════════════════════════════════════
+   NEW DESIGN SYSTEM V2 UTILITIES
+   ═══════════════════════════════════════════════════════ */
+
+/* CSS custom properties for the new sections */
+:root {
+  --bg: 0 0% 98%;
+  --fg: 222 47% 11%;
+  --surface: 0 0% 100%;
+  --surface-2: 210 20% 98%;
+  --surface-3: 220 14% 96%;
+  --border-v2: 220 13% 91%;
+  --border-strong: 220 13% 84%;
+  --muted-v2: 220 9% 46%;
+  --muted-2: 220 9% 64%;
+  --brand-v2: 247 75% 60%;
+  --brand-fg: 0 0% 100%;
+  --brand-soft: 247 75% 96%;
+}
+
+.dark {
+  --bg: 220 18% 4%;
+  --fg: 210 20% 98%;
+  --surface: 220 14% 7%;
+  --surface-2: 220 13% 10%;
+  --surface-3: 220 12% 13%;
+  --border-v2: 220 13% 16%;
+  --border-strong: 220 13% 22%;
+  --muted-v2: 220 9% 64%;
+  --muted-2: 220 9% 50%;
+  --brand-v2: 247 80% 67%;
+  --brand-fg: 220 18% 4%;
+  --brand-soft: 247 50% 14%;
+}
+
+/* Typography */
+.text-display {
+  font-size: clamp(2.5rem, 5vw + 1rem, 5rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+}
+
+.text-lead {
+  font-size: clamp(1.0625rem, 0.5vw + 1rem, 1.25rem);
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: hsl(var(--muted-v2));
+}
+
+/* Container */
+.container-narrow {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-narrow { padding-left: 2rem; padding-right: 2rem; }
+}
+
+@media (min-width: 1024px) {
+  .container-narrow { padding-left: 4rem; padding-right: 4rem; }
+}
+
+/* Grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--border-v2) / 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border-v2) / 0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 50%, transparent 100%);
+}
+
+/* Glow effect */
+.glow-brand {
+  background: radial-gradient(circle at center, hsl(var(--brand-v2) / 0.15) 0%, transparent 70%);
+}
+
+/* Gradient flow animation */
+@keyframes gradient-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
