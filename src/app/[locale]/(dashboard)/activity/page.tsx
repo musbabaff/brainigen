@@ -1,11 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Plus, MessageSquare, CheckCircle2, AlertCircle, CreditCard, Activity } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { useTranslations } from 'next-intl';
+import { Download, Plus, CheckCircle2, AlertCircle, CreditCard, Activity } from 'lucide-react';
 
 // Mock data until DB is fully connected
 const mockActivities = [

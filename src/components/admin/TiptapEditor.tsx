@@ -21,7 +21,7 @@ import { TextStyle } from "@tiptap/extension-text-style";
 
 // lowlight
 import { createLowlight, common } from "lowlight";
-import "highlight.js/styles/atom-one-dark.css"; // Note: Adjust style as needed based on theme
+import "highlight.js/styles/github-dark.css";
 
 import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
