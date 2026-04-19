@@ -327,5 +327,9 @@
       "title": "System Status",
       "desc": "Real-time uptime metrics"
     }
+  },
+  "demo": {
+    "meta_title": "Try Brainigen Live — AI Agent Demo",
+    "meta_description": "Try three different AI agents in your browser. No signup required."
   }
 }

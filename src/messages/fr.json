@@ -225,5 +225,9 @@
     "bot_name": "Nova",
     "status_online": "Online",
     "powered_by": "Powered by Brainigen AI"
+  },
+  "demo": {
+    "meta_title": "Try Brainigen Live — AI Agent Demo",
+    "meta_description": "Try three different AI agents in your browser. No signup required."
   }
 }

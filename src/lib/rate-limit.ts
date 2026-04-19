@@ -14,6 +14,15 @@ export const rateLimit = new Ratelimit({
   prefix: "@upstash/ratelimit",
 });
 
+export const ratelimits = {
+  chatDemo: new Ratelimit({
+    redis: redis,
+    limiter: Ratelimit.slidingWindow(10, "1 h"),
+    analytics: true,
+    prefix: "@upstash/ratelimit/demo",
+  }),
+};
+
 // Global standard rate limit check
 export async function checkRateLimit(ip: string) {
   if (!process.env.UPSTASH_REDIS_REST_URL) {
@@ -21,3 +30,4 @@ export async function checkRateLimit(ip: string) {
   }
   return await rateLimit.limit(ip);
 }
+
