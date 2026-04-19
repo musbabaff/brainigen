@@ -1,22 +1,44 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import crypto from "crypto";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { z } from "zod";
 
 // Resend Webhook handler
 export async function POST(req: Request) {
   try {
+    const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+    const { success } = await checkRateLimit(ip);
+    if (!success) {
+      return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+    }
+
     const payload = await req.text();
     const signature = req.headers.get("svix-signature");
     
     // In production, you would verify the svix signature here.
     // For now, we'll just parse the JSON payload directly.
-    const data = JSON.parse(payload);
-    
-    if (!data.type || !data.data) {
-      return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    let data;
+    try {
+      data = JSON.parse(payload);
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
     }
 
-    const { type, data: eventData } = data;
+    const schema = z.object({
+      type: z.string(),
+      data: z.object({
+        email_id: z.string()
+      }).passthrough()
+    }).passthrough();
+
+    const parsed = schema.safeParse(data);
+    
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid payload format" }, { status: 400 });
+    }
+
+    const { type, data: eventData } = parsed.data;
+
     const resendId = eventData.email_id;
     
     if (!resendId) {

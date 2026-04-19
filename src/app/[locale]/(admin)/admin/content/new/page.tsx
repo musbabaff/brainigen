@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { TiptapEditor } from "@/components/admin/TiptapEditor";
+import dynamic from "next/dynamic";
+const TiptapEditor = dynamic(() => import("@/components/admin/TiptapEditor").then(mod => mod.TiptapEditor), {
+  ssr: false,
+  loading: () => <div className="h-96 w-full animate-pulse bg-secondary rounded-lg" />
+});
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

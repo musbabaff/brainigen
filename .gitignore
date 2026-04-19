@@ -63,3 +63,5 @@ tmp/
 
 # Generated
 /public/sitemap*.xml
+
+.vercel

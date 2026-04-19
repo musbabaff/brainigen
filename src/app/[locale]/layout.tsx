@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
 import { ScrollToTop } from "@/components/shared/scroll-to-top";
-import { CookieConsent } from "@/components/shared/CookieConsent";
+import { CookieConsent } from "@/components/shared/cookie-consent";
 
 type Props = {
   children: React.ReactNode;

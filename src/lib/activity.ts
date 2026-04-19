@@ -5,7 +5,7 @@ export async function logActivity(
   action: string,
   entityType?: string,
   entityId?: string,
-  metadata: Record<string, any> = {}
+  metadata: Record<string, unknown> = {}
 ) {
   try {
     const supabase = await createClient();

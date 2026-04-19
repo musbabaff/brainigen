@@ -225,7 +225,7 @@ await supportAgent.run("The customer with charge ch_12345 requested a refund.");
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
-              <Link key={i} href="#" className="group flex flex-col h-full">
+              <Link key={i} href={`/blog/related-${i}`} className="group flex flex-col h-full">
                 <div className="relative rounded-xl overflow-hidden aspect-video mb-4">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img 

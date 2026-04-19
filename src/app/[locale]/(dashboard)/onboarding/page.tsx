@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { useRouter } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { motion, AnimatePresence } from 'motion/react';
-import confetti from 'canvas-confetti';
+import { motion, AnimatePresence } from 'framer-motion';
+
 import { CheckCircle2, User, Building, Briefcase, Zap, Bot, MessageSquare } from 'lucide-react';
 
 const steps = [
@@ -37,11 +37,13 @@ export default function OnboardingPage() {
   };
 
   const finishOnboarding = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#5B4FE9', '#10b981', '#3b82f6']
+    import('canvas-confetti').then((confetti) => {
+      confetti.default({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#5B4FE9', '#10b981', '#3b82f6']
+      });
     });
     // In a real app, we would save to Supabase here
     setTimeout(() => {

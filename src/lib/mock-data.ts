@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+
 
 // ─── Mock agent data ───
 export type AgentStatus = "active" | "paused" | "draft";

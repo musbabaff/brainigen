@@ -1,53 +1,44 @@
-import { generatePageMetadata } from "@/lib/seo";
+import { getTranslations } from 'next-intl/server';
+import type { Metadata } from 'next';
 
-export const metadata = generatePageMetadata({
-  title: "Cookie Policy",
-  description: "Information about how Brainigen uses cookies and similar technologies.",
-  path: "/cookies",
-  locale: "en",
-});
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations({ locale, namespace: 'legal' });
+  return {
+    title: `${t('cookies_title')} | Brainigen`,
+    description: t('cookies_description'),
+  };
+}
 
-export default function CookiePolicyPage() {
+export default async function CookiesPolicyPage() {
+  const t = await getTranslations('legal');
+  
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
-      <div className="max-w-3xl mx-auto px-6">
-        <h1 className="text-4xl font-bold tracking-tight mb-4">Cookie Policy</h1>
-        <p className="text-muted-foreground mb-12">Last updated: April 18, 2026</p>
+    <main className="container max-w-4xl py-24 md:py-32">
+      <div className="prose prose-neutral dark:prose-invert max-w-none">
+        <h1 className="text-4xl font-bold tracking-tight mb-4">{t('cookies_title')}</h1>
+        <p className="text-muted-foreground mb-12">Last updated: 2026-04-19</p>
 
-        <div className="prose prose-invert max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-brand hover:prose-a:text-brand/80">
-          <h2>1. What are cookies?</h2>
-          <p>
-            Cookies are small text files that are placed on your computer or mobile device when you browse websites. They are widely used to make websites work, or work more efficiently, as well as to provide information to the owners of the site.
-          </p>
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">1. What Are Cookies?</h2>
+          <p>Cookies are small text files that are placed on your computer or mobile device when you visit a website. They are widely used in order to make websites work, or work more efficiently, as well as to provide information to the owners of the site.</p>
+        </section>
 
-          <h2>2. How we use cookies</h2>
-          <p>
-            We use cookies to:
-          </p>
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">2. How We Use Cookies</h2>
+          <p>We use cookies and similar tracking technologies to track the activity on our Service and store certain information. Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze our Service.</p>
           <ul>
-            <li>Remember your login details and session information.</li>
-            <li>Understand how you use our platform so we can improve it.</li>
-            <li>Remember your preferences and settings.</li>
-            <li>Provide relevant marketing communications (if you have opted in).</li>
+            <li><strong>Essential Cookies:</strong> Required for the operation of our website.</li>
+            <li><strong>Analytical/Performance Cookies:</strong> Allow us to recognize and count the number of visitors and to see how visitors move around our website.</li>
+            <li><strong>Functionality Cookies:</strong> Used to recognize you when you return to our website.</li>
+            <li><strong>Targeting Cookies:</strong> Record your visit to our website, the pages you have visited and the links you have followed.</li>
           </ul>
+        </section>
 
-          <h2>3. Types of cookies we use</h2>
-          <p>
-            <strong>Essential Cookies:</strong> These are required for the operation of our website. They include, for example, cookies that enable you to log into secure areas of our website.
-          </p>
-          <p>
-            <strong>Analytical/Performance Cookies:</strong> They allow us to recognize and count the number of visitors and to see how visitors move around our website when they are using it.
-          </p>
-          <p>
-            <strong>Functionality Cookies:</strong> These are used to recognize you when you return to our website. This enables us to personalize our content for you.
-          </p>
-
-          <h2>4. Managing cookies</h2>
-          <p>
-            You can set your browser to refuse all or some browser cookies, or to alert you when websites set or access cookies. If you disable or refuse cookies, please note that some parts of this website may become inaccessible or not function properly.
-          </p>
-        </div>
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-4">3. Contact Us</h2>
+          <p>If you have any questions about our Cookie Policy, please contact us at musbabaff@brainigen.com.</p>
+        </section>
       </div>
-    </div>
+    </main>
   );
 }

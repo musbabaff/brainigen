@@ -10,7 +10,7 @@ export const WelcomeEmail = ({ name = "there" }: { name?: string }) => {
       </Heading>
       
       <Text className="text text-[15px] leading-[24px] text-foreground mb-[24px]">
-        You've just joined the future of work. We're thrilled to have you on board. Brainigen makes it incredibly easy to build, deploy, and manage AI agents that automate your workflows.
+        You&apos;ve just joined the future of work. We&apos;re thrilled to have you on board. Brainigen makes it incredibly easy to build, deploy, and manage AI agents that automate your workflows.
       </Text>
 
       <Section className="bg-brand/5 border border-brand/20 rounded-lg p-[24px] mb-[32px]">

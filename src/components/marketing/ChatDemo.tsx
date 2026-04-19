@@ -319,8 +319,8 @@ export function ChatDemo() {
                     <span className="text-[10px] text-muted-foreground">
                       Powered by Brainigen AI
                     </span>
-                    <Link href="/#contact" className="text-[10px] text-primary hover:underline font-medium">
-                      Book a real call →
+                    <Link href="/demo" className="text-[10px] text-primary hover:underline font-medium">
+                      Open full demo →
                     </Link>
                   </div>
                 </div>

@@ -1,8 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
+import { z } from "zod";
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
+    const { success } = await checkRateLimit(ip);
+    if (!success) {
+      return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+    }
+
     const authHeader = request.headers.get("authorization");
     const expectedKey = process.env.INTERNAL_API_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -11,14 +19,25 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { title, message, actionUrl, icon, targetAudience, targetUserIds, sentBy } = body;
+    
+    const schema = z.object({
+      title: z.string().min(1),
+      message: z.string().min(1),
+      targetAudience: z.string().min(1),
+      actionUrl: z.string().optional(),
+      icon: z.string().optional(),
+      targetUserIds: z.array(z.string()).optional(),
+      sentBy: z.string().optional(),
+    });
 
-    if (!title || !message || !targetAudience) {
+    const parsed = schema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "Missing required fields: title, message, targetAudience" },
+        { error: "Invalid request payload", details: parsed.error.issues },
         { status: 400 }
       );
     }
+    const { title, message, actionUrl, icon, targetAudience, targetUserIds, sentBy } = parsed.data;
 
     const supabase = createAdminClient();
 

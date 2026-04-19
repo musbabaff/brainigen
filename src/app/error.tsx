@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Home, RotateCcw } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 export default function ErrorPage({
   error,
@@ -35,7 +35,7 @@ export default function ErrorPage({
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">Something went wrong</h1>
           <p className="text-muted-foreground">
-            An unexpected error occurred. We've been notified and are working on it.
+            An unexpected error occurred. We&apos;ve been notified and are working on it.
           </p>
           {error.digest && (
             <p className="text-xs text-muted-foreground font-mono mt-4">

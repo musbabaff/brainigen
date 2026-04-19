@@ -3,6 +3,7 @@ import { openai } from '@ai-sdk/openai';
 import { NextRequest } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
+import { z } from 'zod';
 
 // System prompt defining Nova's personality and knowledge
 const SYSTEM_PROMPT = `You are Nova, Brainigen's AI assistant demonstrator. 
@@ -75,7 +76,19 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Parse request
-    const { messages, agentType } = await req.json();
+    const body = await req.json();
+    const schema = z.object({
+      messages: z.array(z.object({
+        role: z.enum(["user", "assistant", "system", "tool"]),
+        content: z.string()
+      })),
+      agentType: z.string().optional()
+    });
+    const parsed = schema.safeParse(body);
+    if (!parsed.success) {
+      return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400 });
+    }
+    const { messages, agentType } = parsed.data;
 
     // 3. Optional: Dynamic system prompt based on agentType (for the demo page)
     let dynamicPrompt = SYSTEM_PROMPT;
@@ -99,7 +112,8 @@ export async function POST(req: NextRequest) {
     const result = streamText({
       model: openai('gpt-4o-mini'),
       system: dynamicPrompt,
-      messages,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      messages: messages as any,
       temperature: 0.7,
     });
 

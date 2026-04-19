@@ -159,7 +159,9 @@
     "register_button": "Hesap Oluştur",
     "no_account": "Hesabınız yok mu?",
     "have_account": "Zaten hesabınız var mı?",
-    "or_continue": "Veya şununla devam edin"
+    "or_continue": "Veya şununla devam edin",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
   },
   "dashboard": {
     "title": "Panel",
@@ -180,5 +182,48 @@
     "description": "An unexpected error occurred. We've been notified and are working on it.",
     "retry": "Try again",
     "back_home": "Back to Home"
+  },
+  "marketing": {
+    "trust": {
+      "title": "Trust Center",
+      "subtitle": "Built on trust",
+      "documents": "Documents",
+      "subprocessors": "Subprocessors",
+      "privacy": "Privacy",
+      "security": "Security Overview",
+      "terms": "Terms of Service"
+    },
+    "security": {
+      "title": "Security",
+      "subtitle": "Built for enterprise security",
+      "features": "Enterprise Features",
+      "encryption": "End-to-End Encryption",
+      "compliance": "SOC2 Compliance",
+      "rbac": "Role-Based Access"
+    },
+    "solutions": {
+      "title": "Solutions",
+      "description": "Tailored for your industry",
+      "sales": "Sales Automation",
+      "support": "Customer Support",
+      "hr": "HR & Recruitment"
+    },
+    "customers": {
+      "title": "Customers",
+      "description": "See who uses Brainigen",
+      "stories": "Success Stories",
+      "metrics": "Key Metrics"
+    },
+    "compare": {
+      "title": "Compare",
+      "description": "Brainigen vs Competitors",
+      "features": "Feature Comparison",
+      "pricing": "Pricing Match"
+    }
+  },
+  "chat": {
+    "bot_name": "Nova",
+    "status_online": "Online",
+    "powered_by": "Powered by Brainigen AI"
   }
 }

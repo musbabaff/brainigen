@@ -59,7 +59,7 @@ export async function sendEmail({
     });
 
     return result.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Failed to send email:", error);
     await logEmail({ 
       userId,
@@ -67,7 +67,7 @@ export async function sendEmail({
       subject, 
       template: templateName, 
       status: "failed", 
-      error: error.message 
+      error: error instanceof Error ? error.message : "Unknown error"
     });
     throw error;
   }

@@ -1,117 +1,104 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { createServerClient } from "@supabase/ssr";
-import createIntlMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
+import { NextResponse, type NextRequest } from 'next/server';
+import { createServerClient } from '@supabase/ssr';
+import createMiddleware from 'next-intl/middleware';
+import { routing } from '@/i18n/routing';
+const { locales, defaultLocale } = routing;
 
-const intlMiddleware = createIntlMiddleware(routing);
+const intlMiddleware = createMiddleware({
+  locales,
+  defaultLocale,
+  localePrefix: 'always',
+});
 
-// Routes that require authentication
-const protectedRoutes = ["/dashboard", "/admin"];
-// Routes that should redirect to dashboard if already authenticated
-const authRoutes = ["/login", "/register"];
+const PROTECTED = ['/dashboard', '/admin', '/onboarding'];
+const ADMIN_ONLY = ['/admin'];
+const CUSTOMER_ONLY = ['/onboarding'];
 
-function isSupabaseConfigured(): boolean {
-  return !!(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
-    process.env.NEXT_PUBLIC_SUPABASE_URL !== "your-supabase-url-here"
-  );
-}
+const ROLE_ACCESS: Record<string, string[]> = {
+  super_admin: ['/admin', '/dashboard'],
+  admin: ['/admin', '/dashboard'],
+  moderator: ['/admin', '/dashboard'],
+  editor: ['/admin', '/dashboard'],
+  support: ['/admin', '/dashboard'],
+  customer: ['/dashboard'],
+};
 
-export async function proxy(request: NextRequest) {
-  // 1. Run next-intl middleware first for locale routing
-  const intlResponse = intlMiddleware(request);
-
-  // If intl middleware wants to redirect, honor that
-  if (intlResponse.status === 307 || intlResponse.status === 308) {
-    return intlResponse;
-  }
-
-  // 2. If Supabase is not configured, just return the intl response (skip auth)
-  if (!isSupabaseConfigured()) {
-    return intlResponse;
-  }
-
-  // 3. Create Supabase client with cookie management
-  let supabaseResponse = NextResponse.next({
-    request,
-    headers: intlResponse.headers,
-  });
+export default async function proxy(request: NextRequest) {
+  let response = NextResponse.next({ request: { headers: request.headers } });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value)
-          );
-          supabaseResponse = NextResponse.next({
-            request,
-            headers: intlResponse.headers,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+        getAll: () => request.cookies.getAll(),
+        setAll: (cookies) => {
+          cookies.forEach(({ name, value }) => request.cookies.set(name, value));
+          response = NextResponse.next({ request });
+          cookies.forEach(({ name, value, options }) => 
+            response.cookies.set(name, value, options)
           );
         },
       },
     }
   );
 
-  // 4. Refresh session (IMPORTANT: don't remove this)
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+  const pathname = request.nextUrl.pathname;
+  const pathWithoutLocale = pathname.replace(/^\/(en|tr|az|ru|de|fr|es|ar)/, '');
+  const locale = pathname.split('/')[1] || defaultLocale;
+  
+  const isProtected = PROTECTED.some(p => pathWithoutLocale.startsWith(p));
+  const isAdminPath = ADMIN_ONLY.some(p => pathWithoutLocale.startsWith(p));
+  const isCustomerOnly = CUSTOMER_ONLY.some(p => pathWithoutLocale.startsWith(p));
 
-  const { pathname } = request.nextUrl;
+  // Not logged in + protected → redirect to login
+  if (isProtected && !user) {
+    const loginUrl = new URL(`/${locale}/login`, request.url);
+    loginUrl.searchParams.set('redirect', pathname);
+    return NextResponse.redirect(loginUrl);
+  }
 
-  // Strip locale prefix to check the route
-  const locales = routing.locales;
-  let pathWithoutLocale = pathname;
-  for (const locale of locales) {
-    if (pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`) {
-      pathWithoutLocale = pathname.slice(`/${locale}`.length) || "/";
-      break;
+  // Logged in → check role
+  if (user && (isAdminPath || isCustomerOnly)) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role, onboarding_completed, mfa_enabled')
+      .eq('id', user.id)
+      .single();
+
+    const role = profile?.role || 'customer';
+    const allowed = ROLE_ACCESS[role] || ['/dashboard'];
+
+    // Customer tries /admin → redirect to dashboard
+    if (isAdminPath && !allowed.some(p => '/admin'.startsWith(p))) {
+      return NextResponse.redirect(new URL(`/${locale}/dashboard`, request.url));
+    }
+
+    // Staff on /onboarding → redirect to admin
+    if (isCustomerOnly && role !== 'customer') {
+      return NextResponse.redirect(new URL(`/${locale}/admin`, request.url));
+    }
+
+    // Customer not onboarded → force onboarding
+    if (role === 'customer' && !profile?.onboarding_completed && !pathWithoutLocale.startsWith('/onboarding')) {
+      return NextResponse.redirect(new URL(`/${locale}/onboarding`, request.url));
     }
   }
 
-  // 5. Redirect unauthenticated users away from protected routes
-  const isProtectedRoute = protectedRoutes.some((route) =>
-    pathWithoutLocale.startsWith(route)
-  );
-  if (isProtectedRoute && !user) {
-    const locale = pathname.split("/")[1] || "en";
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/login`;
-    url.searchParams.set("redirect", pathname);
-    return NextResponse.redirect(url);
+  const intlResponse = intlMiddleware(request);
+  if (intlResponse) {
+    response.cookies.getAll().forEach(cookie => {
+      intlResponse.cookies.set(cookie.name, cookie.value, cookie);
+    });
+    return intlResponse;
   }
 
-  // 6. Redirect authenticated users away from auth routes
-  const isAuthRoute = authRoutes.some((route) =>
-    pathWithoutLocale.startsWith(route)
-  );
-  if (isAuthRoute && user) {
-    const locale = pathname.split("/")[1] || "en";
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}/dashboard`;
-    return NextResponse.redirect(url);
-  }
-
-  // Copy intl response headers to supabase response
-  intlResponse.headers.forEach((value, key) => {
-    supabaseResponse.headers.set(key, value);
-  });
-
-  return supabaseResponse;
+  return response;
 }
 
 export const config = {
   matcher: [
-    "/((?!api|_next|_vercel|auth|.*\\..*).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|xml)$).*)',
   ],
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 
 interface StatusDotProps {
   status: 'online' | 'offline' | 'idle' | 'error' | 'active' | 'paused';

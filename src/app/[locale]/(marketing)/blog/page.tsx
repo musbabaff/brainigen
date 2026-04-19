@@ -208,7 +208,7 @@ export default function BlogListingPage() {
               </h3>
               <div className="space-y-6">
                 {[1, 2, 3].map((i) => (
-                  <Link key={i} href="#" className="flex gap-4 group">
+                  <Link key={i} href={`/blog/trending-${i}`} className="flex gap-4 group">
                     <div className="text-4xl font-bold text-muted-foreground/30 group-hover:text-primary transition-colors">
                       0{i}
                     </div>
