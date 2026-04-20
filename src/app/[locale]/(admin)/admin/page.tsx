@@ -1,165 +1,140 @@
-"use client";
+import { createClient } from '@/lib/supabase/server';
+import { Users, CreditCard, Bot, Ticket, TrendingUp, TrendingDown } from 'lucide-react';
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Users, Bot, DollarSign, CreditCard, Zap, TrendingUp, CheckCircle2 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { mockAdminUsers, mockAdminTickets, mockRevenueData } from "@/lib/admin-mock-data";
-import {
-  ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid,
-} from "recharts";
+async function getStats() {
+  const supabase = await createClient();
 
-const stats = [
-  { label: "Total Users", value: "247", change: "+18%", icon: Users, color: "text-amber-500", bg: "bg-amber-500/10" },
-  { label: "Total Agents", value: "1,342", change: "+24%", icon: Bot, color: "text-blue-500", bg: "bg-blue-500/10" },
-  { label: "MRR", value: "$12,847", change: "+12.3%", icon: DollarSign, color: "text-emerald-500", bg: "bg-emerald-500/10" },
-  { label: "Active Subs", value: "189", change: "+8%", icon: CreditCard, color: "text-primary", bg: "bg-primary/10" },
-  { label: "API Calls Today", value: "84,321", change: "+5.7%", icon: Zap, color: "text-violet-500", bg: "bg-violet-500/10" },
-];
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
-const health = [
-  { name: "API Server", status: "operational" },
-  { name: "Database", status: "operational" },
-  { name: "AI Models", status: "operational" },
-  { name: "Storage", status: "operational" },
-  { name: "Email Service", status: "operational" },
-];
+  const [usersCount, agentsCount, ticketsCount, revenue] = await Promise.all([
+    supabase.from('profiles').select('*', { count: 'exact', head: true }),
+    supabase.from('agents').select('*', { count: 'exact', head: true }).eq('status', 'active'),
+    supabase.from('tickets').select('*', { count: 'exact', head: true }).eq('status', 'open'),
+    supabase.from('invoices').select('amount').eq('status', 'paid').gte('created_at', thirtyDaysAgo),
+  ]);
 
-export default function AdminOverviewPage() {
+  const mrr = revenue.data?.reduce((sum, inv) => sum + Number(inv.amount), 0) || 0;
+
+  return {
+    totalUsers: usersCount.count || 0,
+    activeAgents: agentsCount.count || 0,
+    openTickets: ticketsCount.count || 0,
+    mrr,
+  };
+}
+
+async function getRecentSignups() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('profiles')
+    .select('id, full_name, email, created_at, avatar_url, plan')
+    .order('created_at', { ascending: false })
+    .limit(10);
+  return data || [];
+}
+
+async function getRecentActivity() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from('activity_log')
+    .select('*, profiles(full_name)')
+    .order('created_at', { ascending: false })
+    .limit(15);
+  return data || [];
+}
+
+export default async function AdminDashboardPage() {
+  const [stats, signups, activity] = await Promise.all([
+    getStats(),
+    getRecentSignups(),
+    getRecentActivity(),
+  ]);
+
+  const statCards = [
+    { label: 'Total Users', value: stats.totalUsers, icon: Users, change: '+12%', positive: true },
+    { label: 'MRR', value: `$${stats.mrr.toLocaleString()}`, icon: CreditCard, change: '+8%', positive: true },
+    { label: 'Active Agents', value: stats.activeAgents, icon: Bot, change: '+23%', positive: true },
+    { label: 'Open Tickets', value: stats.openTickets, icon: Ticket, change: '-4%', positive: true },
+  ];
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold tracking-[-0.02em]">Admin Overview</h1>
-        <p className="text-sm text-muted-foreground mt-1">Platform-wide metrics and health status.</p>
+        <h1 className="text-h2 mb-2">Dashboard</h1>
+        <p className="text-muted">Overview of your Brainigen platform</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        {stats.map((s) => (
-          <Card key={s.label} className="border-border/30 bg-card/60">
-            <CardContent className="p-4">
-              <div className={cn("h-8 w-8 rounded-lg flex items-center justify-center mb-2", s.bg)}>
-                <s.icon className={cn("h-4 w-4", s.color)} />
+      {/* Stat cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {statCards.map((stat) => (
+          <div key={stat.label} className="p-5 rounded-xl border border-border bg-surface">
+            <div className="flex items-center justify-between mb-3">
+              <div className="w-10 h-10 rounded-lg bg-brand-soft flex items-center justify-center">
+                <stat.icon className="w-5 h-5 text-brand" />
               </div>
-              <p className="text-xl font-bold tracking-[-0.02em]">{s.value}</p>
-              <div className="flex items-center justify-between mt-0.5">
-                <p className="text-[11px] text-muted-foreground">{s.label}</p>
-                <span className="text-[10px] text-emerald-500 font-medium flex items-center gap-0.5">
-                  <TrendingUp className="h-3 w-3" />{s.change}
-                </span>
+              <div className={`flex items-center gap-1 text-xs font-medium ${
+                stat.positive ? 'text-success' : 'text-danger'
+              }`}>
+                {stat.positive ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                {stat.change}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+            <div className="text-2xl font-semibold mb-1">{stat.value}</div>
+            <div className="text-sm text-muted">{stat.label}</div>
+          </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Revenue Chart */}
-        <Card className="lg:col-span-2 border-border/30 bg-card/60">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold">Revenue — Last 12 Months</CardTitle>
-          </CardHeader>
-          <CardContent className="p-4 pt-0">
-            <div className="h-[260px]">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={200}>
-                <BarChart data={mockRevenueData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
-                  <XAxis dataKey="month" tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} />
-                  <YAxis tick={{ fontSize: 11 }} stroke="hsl(var(--muted-foreground))" tickLine={false} axisLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
-                  <Tooltip contentStyle={{ backgroundColor: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: "8px", fontSize: "12px" }} formatter={(value) => [`$${Number(value).toLocaleString()}`, "Revenue"]} />
-                  <Bar dataKey="revenue" fill="#f59e0b" radius={[4, 4, 0, 0]} opacity={0.85} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Recent signups + activity */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="rounded-xl border border-border bg-surface">
+          <div className="px-5 py-4 border-b border-border">
+            <h3 className="font-semibold">Recent Signups</h3>
+          </div>
+          <div className="divide-y divide-border">
+            {signups.length === 0 ? (
+              <div className="p-8 text-center text-muted">No signups yet</div>
+            ) : (
+              signups.map((user) => (
+                <div key={user.id} className="flex items-center gap-3 p-4">
+                  <div className="w-9 h-9 rounded-full bg-brand-soft flex items-center justify-center text-xs text-brand font-semibold">
+                    {user.full_name?.split(' ').map((n: string) => n[0]).slice(0, 2).join('').toUpperCase() || 'U'}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium truncate">{user.full_name || 'Unknown'}</div>
+                    <div className="text-xs text-muted truncate">{user.email}</div>
+                  </div>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-surface-2 text-muted uppercase">
+                    {user.plan || 'free'}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
 
-        {/* System Health */}
-        <Card className="border-border/30 bg-card/60">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold">System Health</CardTitle>
-          </CardHeader>
-          <CardContent className="p-4 pt-0 space-y-2.5">
-            {health.map((h) => (
-              <div key={h.name} className="flex items-center justify-between py-1.5">
-                <span className="text-sm">{h.name}</span>
-                <Badge variant="outline" className="text-[10px] border-emerald-500/30 text-emerald-500 bg-emerald-500/10">
-                  <CheckCircle2 className="h-3 w-3 mr-1" /> Operational
-                </Badge>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        {/* Recent Signups */}
-        <Card className="border-border/30 bg-card/60">
-          <CardHeader className="pb-2"><CardTitle className="text-sm font-semibold">Recent Signups</CardTitle></CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead><tr className="border-b border-border/20">
-                  <th className="text-left p-3 text-xs font-medium text-muted-foreground">User</th>
-                  <th className="text-left p-3 text-xs font-medium text-muted-foreground">Plan</th>
-                  <th className="text-left p-3 text-xs font-medium text-muted-foreground">Joined</th>
-                </tr></thead>
-                <tbody>
-                  {mockAdminUsers.slice(0, 6).map((u) => (
-                    <tr key={u.id} className="border-b border-border/10 hover:bg-accent/30 transition-colors">
-                      <td className="p-3">
-                        <div className="flex items-center gap-2">
-                          <Avatar className="h-7 w-7"><AvatarFallback className="text-[10px] bg-amber-500/10 text-amber-500">{u.initials}</AvatarFallback></Avatar>
-                          <div><p className="text-xs font-medium">{u.name}</p><p className="text-[11px] text-muted-foreground">{u.email}</p></div>
-                        </div>
-                      </td>
-                      <td className="p-3"><Badge variant="outline" className="text-[10px] capitalize">{u.plan}</Badge></td>
-                      <td className="p-3 text-xs text-muted-foreground">{u.joinedAt}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Recent Tickets */}
-        <Card className="border-border/30 bg-card/60">
-          <CardHeader className="pb-2"><CardTitle className="text-sm font-semibold">Recent Tickets</CardTitle></CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead><tr className="border-b border-border/20">
-                  <th className="text-left p-3 text-xs font-medium text-muted-foreground">Subject</th>
-                  <th className="text-left p-3 text-xs font-medium text-muted-foreground">Priority</th>
-                  <th className="text-left p-3 text-xs font-medium text-muted-foreground">Status</th>
-                </tr></thead>
-                <tbody>
-                  {mockAdminTickets.map((t) => (
-                    <tr key={t.id} className="border-b border-border/10 hover:bg-accent/30 transition-colors">
-                      <td className="p-3"><p className="text-xs font-medium truncate max-w-[200px]">{t.subject}</p><p className="text-[11px] text-muted-foreground">{t.user}</p></td>
-                      <td className="p-3">
-                        <Badge variant="outline" className={cn("text-[10px]",
-                          t.priority === "high" || t.priority === "critical" ? "border-destructive/30 text-destructive bg-destructive/10" :
-                          t.priority === "medium" ? "border-amber-500/30 text-amber-500 bg-amber-500/10" :
-                          "border-border/40 text-muted-foreground"
-                        )}>{t.priority}</Badge>
-                      </td>
-                      <td className="p-3">
-                        <Badge variant="outline" className={cn("text-[10px]",
-                          t.status === "open" ? "border-blue-500/30 text-blue-500 bg-blue-500/10" :
-                          t.status === "in_progress" ? "border-amber-500/30 text-amber-500 bg-amber-500/10" :
-                          "border-emerald-500/30 text-emerald-500 bg-emerald-500/10"
-                        )}>{t.status.replace("_", " ")}</Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-border bg-surface">
+          <div className="px-5 py-4 border-b border-border">
+            <h3 className="font-semibold">Recent Activity</h3>
+          </div>
+          <div className="divide-y divide-border max-h-[400px] overflow-y-auto">
+            {activity.length === 0 ? (
+              <div className="p-8 text-center text-muted">No activity yet</div>
+            ) : (
+              activity.map((log) => (
+                <div key={log.id} className="p-4">
+                  <div className="text-sm">
+                    <span className="font-medium">{log.profiles?.full_name || 'System'}</span>
+                    <span className="text-muted"> — {log.action}</span>
+                  </div>
+                  <div className="text-xs text-muted mt-1">
+                    {new Date(log.created_at).toLocaleString()}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

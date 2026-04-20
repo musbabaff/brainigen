@@ -25,12 +25,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <div lang={locale} dir={dir} className="flex flex-col min-h-screen">
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider>
           <TooltipProvider>
             {children}
             <Toaster richColors position="bottom-right" />
