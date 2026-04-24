@@ -1,9 +1,8 @@
 import { Resend } from "resend";
 import { render } from "@react-email/render";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { getSetting } from "@/lib/settings";
 import React from "react";
-
-const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key_for_build");
 
 export interface EmailOptions {
   to: string | string[];
@@ -20,25 +19,32 @@ export async function sendEmail({
   subject,
   templateName,
   template,
-  from = "Brainigen <hello@brainigen.com>",
+  from,
   replyTo,
   userId,
 }: EmailOptions) {
   try {
+    // getSetting falls back to process.env.RESEND_API_KEY if not in DB
+    const apiKey = await getSetting('resend_api_key', process.env.RESEND_API_KEY);
+    const fromEmail = from ?? await getSetting('email_from', 'hello@brainigen.com') ?? 'hello@brainigen.com';
+    const fromName = await getSetting('email_from_name', 'Brainigen') ?? 'Brainigen';
+    const fromAddress = `${fromName} <${fromEmail}>`;
+    const resolvedReplyTo = replyTo ?? await getSetting('email_reply_to') ?? undefined;
+
     const html = await render(template);
-    
-    // In development without an API key, just log
-    if (!process.env.RESEND_API_KEY) {
+
+    if (!apiKey) {
       console.log(`[DEV EMAIL] To: ${to} | Subject: ${subject} | Template: ${templateName}`);
       return { id: "dev_" + Math.random().toString(36).substring(7) };
     }
 
+    const resend = new Resend(apiKey);
     const result = await resend.emails.send({
-      from,
+      from: fromAddress,
       to,
       subject,
       html,
-      replyTo,
+      replyTo: resolvedReplyTo,
       tags: [
         { name: "template", value: templateName },
       ],
@@ -48,12 +54,11 @@ export async function sendEmail({
       throw new Error(result.error.message);
     }
 
-    // Log to Supabase for tracking
-    await logEmail({ 
+    await logEmail({
       userId,
-      to: Array.isArray(to) ? to.join(", ") : to, 
-      subject, 
-      template: templateName, 
+      to: Array.isArray(to) ? to.join(", ") : to,
+      subject,
+      template: templateName,
       status: "sent",
       resendId: result.data?.id
     });
@@ -61,12 +66,12 @@ export async function sendEmail({
     return result.data;
   } catch (error: unknown) {
     console.error("Failed to send email:", error);
-    await logEmail({ 
+    await logEmail({
       userId,
-      to: Array.isArray(to) ? to.join(", ") : to, 
-      subject, 
-      template: templateName, 
-      status: "failed", 
+      to: Array.isArray(to) ? to.join(", ") : to,
+      subject,
+      template: templateName,
+      status: "failed",
       error: error instanceof Error ? error.message : "Unknown error"
     });
     throw error;
