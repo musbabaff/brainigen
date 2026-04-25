@@ -3,12 +3,19 @@
     "home": "Accueil",
     "about": "À propos",
     "services": "Services",
+    "product": "Produit",
+    "solutions": "Solutions",
+    "customers": "Clients",
     "pricing": "Tarifs",
     "blog": "Blog",
+    "docs": "Documentation",
     "contact": "Contact",
     "login": "Connexion",
     "signup": "Commencer",
-    "dashboard": "Tableau de bord"
+    "dashboard": "Tableau de bord",
+    "admin_panel": "Panneau Admin",
+    "settings": "Paramètres",
+    "sign_out": "Déconnexion"
   },
   "hero": {
     "title": "Des agents IA qui anticipent.",

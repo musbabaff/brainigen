@@ -3,12 +3,19 @@
     "home": "Inicio",
     "about": "Nosotros",
     "services": "Servicios",
+    "product": "Producto",
+    "solutions": "Soluciones",
+    "customers": "Clientes",
     "pricing": "Precios",
     "blog": "Blog",
+    "docs": "Documentación",
     "contact": "Contacto",
     "login": "Iniciar sesión",
     "signup": "Comenzar",
-    "dashboard": "Panel"
+    "dashboard": "Panel",
+    "admin_panel": "Panel Admin",
+    "settings": "Configuración",
+    "sign_out": "Cerrar sesión"
   },
   "hero": {
     "title": "Agentes de IA que piensan por adelantado.",

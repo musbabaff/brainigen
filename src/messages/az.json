@@ -3,12 +3,19 @@
     "home": "Ana Səhifə",
     "about": "Haqqımızda",
     "services": "Xidmətlər",
+    "product": "Məhsul",
+    "solutions": "Həllər",
+    "customers": "Müştərilər",
     "pricing": "Qiymətlər",
     "blog": "Bloq",
+    "docs": "Sənədlər",
     "contact": "Əlaqə",
     "login": "Daxil ol",
     "signup": "Başlayın",
-    "dashboard": "Panel"
+    "dashboard": "Panel",
+    "admin_panel": "İdarə Paneli",
+    "settings": "Parametrlər",
+    "sign_out": "Çıxış"
   },
   "hero": {
     "title": "Qabaqcadan Düşünən AI Agentləri.",

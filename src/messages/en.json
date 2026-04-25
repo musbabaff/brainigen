@@ -3,12 +3,19 @@
     "home": "Home",
     "about": "About",
     "services": "Services",
+    "product": "Product",
+    "solutions": "Solutions",
+    "customers": "Customers",
     "pricing": "Pricing",
     "blog": "Blog",
+    "docs": "Docs",
     "contact": "Contact",
     "login": "Log In",
     "signup": "Get Started",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin_panel": "Admin Panel",
+    "settings": "Settings",
+    "sign_out": "Sign Out"
   },
   "hero": {
     "title": "AI Agents That Think Ahead.",

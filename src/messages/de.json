@@ -3,12 +3,19 @@
     "home": "Startseite",
     "about": "Über uns",
     "services": "Leistungen",
+    "product": "Produkt",
+    "solutions": "Lösungen",
+    "customers": "Kunden",
     "pricing": "Preise",
     "blog": "Blog",
+    "docs": "Dokumentation",
     "contact": "Kontakt",
     "login": "Anmelden",
     "signup": "Loslegen",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "admin_panel": "Adminbereich",
+    "settings": "Einstellungen",
+    "sign_out": "Abmelden"
   },
   "hero": {
     "title": "KI-Agenten, die vorausdenken.",

@@ -3,12 +3,19 @@
     "home": "Ana Sayfa",
     "about": "Hakkımızda",
     "services": "Hizmetler",
+    "product": "Ürün",
+    "solutions": "Çözümler",
+    "customers": "Müşteriler",
     "pricing": "Fiyatlandırma",
     "blog": "Blog",
+    "docs": "Dokümanlar",
     "contact": "İletişim",
     "login": "Giriş Yap",
     "signup": "Başlayın",
-    "dashboard": "Panel"
+    "dashboard": "Panel",
+    "admin_panel": "Yönetim Paneli",
+    "settings": "Ayarlar",
+    "sign_out": "Çıkış Yap"
   },
   "hero": {
     "title": "Önceden Düşünen AI Ajanları.",

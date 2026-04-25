@@ -3,12 +3,19 @@
     "home": "Главная",
     "about": "О нас",
     "services": "Услуги",
+    "product": "Продукт",
+    "solutions": "Решения",
+    "customers": "Клиенты",
     "pricing": "Цены",
     "blog": "Блог",
+    "docs": "Документация",
     "contact": "Контакты",
     "login": "Войти",
     "signup": "Начать",
-    "dashboard": "Панель"
+    "dashboard": "Панель",
+    "admin_panel": "Панель администратора",
+    "settings": "Настройки",
+    "sign_out": "Выйти"
   },
   "hero": {
     "title": "AI-агенты, которые мыслят на шаг вперёд.",

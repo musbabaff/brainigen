@@ -251,11 +251,11 @@ function DashboardPreview() {
                   style={{
                     background: `linear-gradient(to top, hsl(var(--brand)/0.9), hsl(var(--brand)/0.4))`,
                     height: `${h}%`,
+                    transformOrigin: 'bottom',
                   }}
                   initial={{ scaleY: 0 }}
                   animate={{ scaleY: 1 }}
                   transition={{ delay: 0.6 + i * 0.04, duration: 0.4, ease: 'easeOut' }}
-                  style={{ height: `${h}%`, transformOrigin: 'bottom' }}
                 />
               ))}
             </div>
