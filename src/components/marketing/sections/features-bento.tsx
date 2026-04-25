@@ -78,12 +78,11 @@ function BarChart() {
         <motion.div
           key={i}
           className="w-2 rounded-sm bg-[hsl(var(--brand))]"
-          style={{ height: `${h * 0.4}px` }}
+          style={{ height: `${h * 0.4}px`, originY: 1 }}
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 + i * 0.04, duration: 0.4, ease: 'easeOut' }}
-          style={{ height: `${h * 0.4}px`, originY: 1 }}
         />
       ))}
     </div>
