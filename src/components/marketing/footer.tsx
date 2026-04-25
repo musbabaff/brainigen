@@ -132,7 +132,7 @@ export function Footer() {
                   aria-label={label}
                   className="h-8 w-8 flex items-center justify-center rounded-lg text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))] transition-all duration-150 cursor-pointer"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon />
                 </a>
               ))}
             </div>
