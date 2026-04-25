@@ -47,39 +47,39 @@
 
 /* ============ CSS VARIABLES ============ */
 :root {
-  --bg: 0 0% 100%;
-  --fg: 222 47% 11%;
+  --bg: 0 0% 99%;
+  --fg: 240 10% 6%;
   --surface: 0 0% 100%;
-  --surface-2: 210 20% 98%;
-  --surface-3: 220 14% 96%;
-  --border: 220 13% 91%;
-  --border-strong: 220 13% 84%;
-  --muted: 220 9% 46%;
-  --muted-2: 220 9% 64%;
-  --brand: 247 75% 60%;
+  --surface-2: 240 6% 97%;
+  --surface-3: 240 5% 94%;
+  --border: 240 5% 88%;
+  --border-strong: 240 5% 76%;
+  --muted: 240 5% 40%;
+  --muted-2: 240 5% 58%;
+  --brand: 252 94% 60%;
   --brand-fg: 0 0% 100%;
-  --brand-soft: 247 75% 96%;
-  --success: 142 71% 45%;
-  --warning: 38 92% 50%;
-  --danger: 0 72% 51%;
+  --brand-soft: 252 94% 96%;
+  --success: 142 71% 42%;
+  --warning: 38 92% 48%;
+  --danger: 0 72% 50%;
 }
 
 .dark {
-  --bg: 220 18% 4%;
-  --fg: 210 20% 98%;
-  --surface: 220 14% 7%;
-  --surface-2: 220 13% 10%;
-  --surface-3: 220 12% 13%;
-  --border: 220 13% 16%;
-  --border-strong: 220 13% 22%;
-  --muted: 220 9% 64%;
-  --muted-2: 220 9% 50%;
-  --brand: 247 80% 67%;
-  --brand-fg: 220 18% 4%;
-  --brand-soft: 247 50% 14%;
-  --success: 142 69% 58%;
-  --warning: 38 92% 60%;
-  --danger: 0 72% 60%;
+  --bg: 0 0% 4%;
+  --fg: 0 0% 97%;
+  --surface: 0 0% 6%;
+  --surface-2: 0 0% 9%;
+  --surface-3: 0 0% 13%;
+  --border: 0 0% 16%;
+  --border-strong: 0 0% 24%;
+  --muted: 0 0% 58%;
+  --muted-2: 0 0% 42%;
+  --brand: 252 100% 69%;
+  --brand-fg: 0 0% 100%;
+  --brand-soft: 252 80% 10%;
+  --success: 142 69% 55%;
+  --warning: 38 92% 58%;
+  --danger: 0 72% 58%;
 }
 
 /* ============ BASE ============ */

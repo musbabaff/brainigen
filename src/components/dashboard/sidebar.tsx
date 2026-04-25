@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {
   LayoutDashboard, Bot, Database, Layers, MessageSquare,
   BarChart3, Activity, Star, DollarSign,
@@ -90,54 +90,36 @@ function NavItem({
   collapsed: boolean;
 }) {
   const Icon = item.icon;
-  const link = (
+
+  const inner = (
     <Link
       href={item.href}
       className={cn(
-        'flex items-center gap-3 rounded-lg transition-all duration-150 cursor-pointer',
-        collapsed ? 'h-9 w-9 justify-center' : 'px-3 py-1.5',
+        'group/item relative flex items-center gap-2.5 rounded-lg text-sm transition-all duration-150 cursor-pointer',
+        collapsed ? 'h-9 w-9 justify-center' : 'px-2.5 py-1.5',
         isActive
-          ? 'bg-[hsl(var(--brand)/0.12)] text-[hsl(var(--brand))] font-medium'
+          ? 'bg-[hsl(var(--brand)/0.1)] text-[hsl(var(--brand))] font-medium'
           : 'text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))]'
       )}
     >
-      <Icon className="w-4 h-4 flex-shrink-0" />
-      {!collapsed && (
-        <motion.span
-          initial={false}
-          animate={{ opacity: 1, width: 'auto' }}
-          exit={{ opacity: 0, width: 0 }}
-          className="truncate text-sm"
-        >
-          {item.label}
-        </motion.span>
+      {/* Active indicator */}
+      {isActive && !collapsed && (
+        <span className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-0.5 rounded-full bg-[hsl(var(--brand))]" />
       )}
+      <Icon className={cn('flex-shrink-0', collapsed ? 'w-4 h-4' : 'w-3.5 h-3.5')} />
+      {!collapsed && <span className="truncate leading-none">{item.label}</span>}
     </Link>
   );
 
   if (collapsed) {
     return (
       <Tooltip>
-        <TooltipTrigger
-          render={
-            <Link
-              href={item.href}
-              className={cn(
-                'flex items-center justify-center h-9 w-9 rounded-lg transition-all duration-150 cursor-pointer',
-                isActive
-                  ? 'bg-[hsl(var(--brand)/0.12)] text-[hsl(var(--brand))]'
-                  : 'text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))]'
-              )}
-            >
-              <Icon className="w-4 h-4 flex-shrink-0" />
-            </Link>
-          }
-        />
+        <TooltipTrigger render={inner} />
         <TooltipContent side="right" className="text-xs">{item.label}</TooltipContent>
       </Tooltip>
     );
   }
-  return link;
+  return inner;
 }
 
 export function DashboardSidebar({ profile }: { profile: { plan?: string } | null }) {
@@ -147,52 +129,60 @@ export function DashboardSidebar({ profile }: { profile: { plan?: string } | nul
 
   return (
     <motion.aside
-      animate={{ width: collapsed ? 64 : 240 }}
+      animate={{ width: collapsed ? 56 : 240 }}
       transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed left-0 top-0 bottom-0 border-r border-[hsl(var(--border))] bg-[hsl(var(--surface))] flex flex-col z-30 overflow-hidden"
+      className="fixed left-0 top-0 bottom-0 flex flex-col z-30 overflow-hidden border-r border-[hsl(var(--border))] bg-[hsl(var(--surface))]"
     >
-      {/* Header */}
-      <div className={cn('h-14 flex items-center border-b border-[hsl(var(--border))] shrink-0', collapsed ? 'justify-center px-0' : 'px-4 justify-between')}>
-        {!collapsed && (
-          <Link href="/dashboard" className="flex items-center gap-2 font-semibold min-w-0">
-            <div className="w-7 h-7 rounded-lg bg-[hsl(var(--brand))] flex items-center justify-center shadow-[0_2px_8px_hsl(var(--brand)/0.3)] shrink-0">
-              <Sparkles className="w-3.5 h-3.5 text-white" />
-            </div>
-            <motion.span
-              animate={{ opacity: collapsed ? 0 : 1 }}
-              className="text-sm font-semibold tracking-tight truncate"
-            >
-              Brainigen
-            </motion.span>
-          </Link>
-        )}
-        {collapsed && (
-          <Link href="/dashboard" className="w-7 h-7 rounded-lg bg-[hsl(var(--brand))] flex items-center justify-center shadow-[0_2px_8px_hsl(var(--brand)/0.3)]">
+      {/* Logo header */}
+      <div className={cn(
+        'h-14 flex items-center border-b border-[hsl(var(--border))] shrink-0',
+        collapsed ? 'justify-center' : 'px-4 justify-between'
+      )}>
+        {collapsed ? (
+          <Link
+            href="/dashboard"
+            className="w-7 h-7 rounded-xl bg-[hsl(var(--brand))] flex items-center justify-center shadow-[0_2px_10px_hsl(var(--brand)/0.35)]"
+          >
             <Sparkles className="w-3.5 h-3.5 text-white" />
           </Link>
-        )}
-        {!collapsed && (
-          <button
-            onClick={() => setCollapsed(true)}
-            className="h-6 w-6 rounded-md flex items-center justify-center text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))] transition-colors cursor-pointer shrink-0"
-            aria-label="Collapse sidebar"
-          >
-            <ChevronLeft className="w-3.5 h-3.5" />
-          </button>
+        ) : (
+          <>
+            <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
+              <div className="w-7 h-7 rounded-xl bg-[hsl(var(--brand))] flex items-center justify-center shadow-[0_2px_10px_hsl(var(--brand)/0.35)] shrink-0">
+                <Sparkles className="w-3.5 h-3.5 text-white" />
+              </div>
+              <motion.span
+                animate={{ opacity: collapsed ? 0 : 1 }}
+                className="text-sm font-semibold tracking-tight truncate"
+              >
+                Brainigen
+              </motion.span>
+            </Link>
+            <button
+              onClick={() => setCollapsed(true)}
+              className="h-6 w-6 rounded-lg flex items-center justify-center text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))] transition-colors cursor-pointer shrink-0"
+              aria-label="Collapse sidebar"
+            >
+              <ChevronLeft className="w-3.5 h-3.5" />
+            </button>
+          </>
         )}
       </div>
 
-      {/* Nav */}
-      <div className={cn('flex-1 overflow-y-auto overflow-x-hidden py-3', collapsed ? 'px-2' : 'px-3')}>
-        {SECTIONS.map((section) => (
-          <div key={section.label} className="mb-5">
+      {/* Navigation */}
+      <div className={cn(
+        'flex-1 overflow-y-auto overflow-x-hidden py-4 scrollbar-thin',
+        collapsed ? 'px-1.5' : 'px-3'
+      )}>
+        {SECTIONS.map((section, si) => (
+          <div key={section.label} className={cn('mb-5', si === 0 && 'mb-3')}>
             {!collapsed && (
-              <motion.div
-                animate={{ opacity: collapsed ? 0 : 1 }}
-                className="px-3 mb-1.5 text-[10px] font-semibold text-[hsl(var(--muted))] uppercase tracking-widest"
-              >
+              <div className="px-2.5 mb-1 text-[10px] font-semibold text-[hsl(var(--muted-2))] uppercase tracking-[0.1em]">
                 {section.label}
-              </motion.div>
+              </div>
+            )}
+            {collapsed && si > 0 && (
+              <div className="my-2 mx-1.5 h-px bg-[hsl(var(--border))]" />
             )}
             <div className={cn('space-y-0.5', collapsed && 'flex flex-col items-center')}>
               {section.items.map((item) => {
@@ -208,8 +198,8 @@ export function DashboardSidebar({ profile }: { profile: { plan?: string } | nul
         ))}
       </div>
 
-      {/* Footer */}
-      <div className={cn('border-t border-[hsl(var(--border))] shrink-0', collapsed ? 'p-2' : 'p-3')}>
+      {/* Footer — plan + expand */}
+      <div className={cn('border-t border-[hsl(var(--border))] shrink-0', collapsed ? 'p-1.5' : 'p-3')}>
         {collapsed ? (
           <Tooltip>
             <TooltipTrigger
@@ -227,20 +217,22 @@ export function DashboardSidebar({ profile }: { profile: { plan?: string } | nul
           </Tooltip>
         ) : (
           <div className="rounded-xl bg-[hsl(var(--surface-2))] p-3 border border-[hsl(var(--border))]">
-            <div className="flex items-center justify-between mb-2.5">
-              <span className="text-[10px] text-[hsl(var(--muted))] font-medium uppercase tracking-wider">Plan</span>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.1em] text-[hsl(var(--muted-2))]">
+                Current plan
+              </span>
               <span className={cn(
                 'text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide',
                 profile?.plan && profile.plan !== 'free'
-                  ? 'bg-[hsl(var(--brand)/0.15)] text-[hsl(var(--brand))]'
+                  ? 'bg-[hsl(var(--brand)/0.12)] text-[hsl(var(--brand))]'
                   : 'bg-[hsl(var(--surface-3))] text-[hsl(var(--muted))]'
               )}>
-                {profile?.plan || 'free'}
+                {profile?.plan || 'Free'}
               </span>
             </div>
             <Link
               href="/dashboard/billing"
-              className="block w-full text-center text-xs font-semibold px-3 py-2 rounded-lg bg-[hsl(var(--fg))] text-[hsl(var(--bg))] hover:bg-[hsl(var(--fg)/0.9)] transition-colors cursor-pointer shadow-sm"
+              className="block w-full text-center text-xs font-semibold px-3 py-2 rounded-lg bg-[hsl(var(--brand))] text-white hover:bg-[hsl(var(--brand)/0.9)] transition-colors cursor-pointer shadow-[0_2px_8px_hsl(var(--brand)/0.25)]"
             >
               Upgrade →
             </Link>
