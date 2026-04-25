@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
@@ -19,9 +20,9 @@ function BeamLine({ delay = 0, duration = 3, className = '' }: { delay?: number;
   );
 }
 
-function FloatingOrb({ className = '' }: { className?: string }) {
+function FloatingOrb({ className = '', style }: { className?: string; style?: CSSProperties }) {
   return (
-    <div className={`absolute rounded-full blur-3xl pointer-events-none ${className}`} />
+    <div className={`absolute rounded-full blur-3xl pointer-events-none ${className}`} style={style} />
   );
 }
 
