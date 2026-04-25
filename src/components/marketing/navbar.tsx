@@ -178,13 +178,13 @@ export function Navbar() {
             ) : (
               <>
                 <Link href="/login" className="px-3 py-1.5 text-sm text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] transition-colors">
-                  {t('sign_in')}
+                  {t('login')}
                 </Link>
                 <Link
                   href="/register"
                   className="inline-flex items-center h-8 px-4 bg-[hsl(var(--fg))] text-[hsl(var(--bg))] rounded-lg text-sm font-medium hover:bg-[hsl(var(--fg)/0.9)] transition-all shadow-sm hover:shadow-md active:scale-[0.97] cursor-pointer"
                 >
-                  {t('get_started')}
+                  {t('signup')}
                 </Link>
               </>
             )}
@@ -274,10 +274,10 @@ export function Navbar() {
                 ) : (
                   <>
                     <Link href="/login" className="flex items-center justify-center h-12 px-4 rounded-xl border border-[hsl(var(--border))] text-sm font-medium hover:bg-[hsl(var(--surface-2))] transition-colors cursor-pointer">
-                      {t('sign_in')}
+                      {t('login')}
                     </Link>
                     <Link href="/register" className="flex items-center justify-center h-12 px-4 rounded-xl bg-[hsl(var(--fg))] text-[hsl(var(--bg))] text-sm font-medium hover:bg-[hsl(var(--fg)/0.9)] transition-colors cursor-pointer shadow-sm">
-                      {t('get_started')}
+                      {t('signup')}
                     </Link>
                   </>
                 )}
