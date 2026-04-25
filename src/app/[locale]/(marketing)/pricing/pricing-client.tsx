@@ -71,7 +71,7 @@ export function PricingClient() {
                       </li>
                     ))}
                   </ul>
-                  <Button className={cn("w-full cursor-pointer", plan.popular ? "bg-primary hover:bg-primary/90 shadow-[0_2px_8px_rgba(91,79,233,0.3)]" : "bg-secondary text-foreground hover:bg-secondary/80")} variant={plan.popular ? "default" : "outline"}>
+                  <Button className={cn("w-full cursor-pointer", plan.popular ? "bg-primary hover:bg-primary/90 shadow-[0_2px_8px_hsl(var(--brand)/0.3)]" : "bg-secondary text-foreground hover:bg-secondary/80")} variant={plan.popular ? "default" : "outline"}>
                     {plan.monthly === null ? "Contact Sales" : plan.monthly === 0 ? "Start Free" : "Start Trial"}
                   </Button>
                 </CardContent>

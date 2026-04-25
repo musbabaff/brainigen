@@ -74,7 +74,7 @@ export function CTASection() {
             >
               <Button
                 size="lg"
-                className="bg-primary hover:bg-primary/90 text-primary-foreground h-13 px-10 text-sm font-medium cursor-pointer rounded-xl shadow-[0_2px_24px_rgba(91,79,233,0.35)] hover:shadow-[0_4px_32px_rgba(91,79,233,0.55)] transition-all duration-300 group hover:scale-[1.02] active:scale-[0.98]"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground h-13 px-10 text-sm font-medium cursor-pointer rounded-xl shadow-[0_2px_24px_hsl(var(--brand)/0.35)] hover:shadow-[0_4px_32px_hsl(var(--brand)/0.55)] transition-all duration-300 group hover:scale-[1.02] active:scale-[0.98]"
               >
                 {t("button")}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

@@ -168,7 +168,7 @@ export default function CreateAgentPage() {
               </div>
               <Button
                 onClick={handleDeploy}
-                className="bg-primary hover:bg-primary/90 cursor-pointer shadow-[0_2px_12px_rgba(91,79,233,0.35)] h-11 px-8"
+                className="bg-primary hover:bg-primary/90 cursor-pointer shadow-[0_2px_12px_hsl(var(--brand)/0.35)] h-11 px-8"
               >
                 Deploy Agent
               </Button>

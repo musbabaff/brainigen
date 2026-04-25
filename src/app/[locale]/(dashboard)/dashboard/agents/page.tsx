@@ -29,7 +29,7 @@ export default async function AgentsPage() {
           <p className="text-sm text-muted-foreground mt-1">{agentList.length} agent{agentList.length !== 1 ? 's' : ''} total</p>
         </div>
         <Link href="/dashboard/agents">
-          <Button className="bg-primary hover:bg-primary/90 cursor-pointer shadow-[0_2px_8px_rgba(91,79,233,0.3)]">
+          <Button className="bg-primary hover:bg-primary/90 cursor-pointer shadow-[0_2px_8px_hsl(var(--brand)/0.3)]">
             <Plus className="h-4 w-4 mr-2" />
             Create Agent
           </Button>

@@ -17,9 +17,26 @@
   --color-brand: hsl(var(--brand));
   --color-brand-fg: hsl(var(--brand-fg));
   --color-brand-soft: hsl(var(--brand-soft));
+  --color-brand-accent: hsl(var(--brand));
   --color-success: hsl(var(--success));
   --color-warning: hsl(var(--warning));
   --color-danger: hsl(var(--danger));
+
+  /* ── shadcn/base-ui component aliases ──────────────────── */
+  --color-primary: hsl(var(--brand));
+  --color-primary-foreground: hsl(var(--brand-fg));
+  --color-secondary: hsl(var(--surface-2));
+  --color-secondary-foreground: hsl(var(--fg));
+  --color-card: hsl(var(--surface));
+  --color-card-foreground: hsl(var(--fg));
+  --color-popover: hsl(var(--surface));
+  --color-popover-foreground: hsl(var(--fg));
+  --color-accent: hsl(var(--surface-2));
+  --color-accent-foreground: hsl(var(--fg));
+  --color-input: hsl(var(--surface-2));
+  --color-ring: hsl(var(--brand));
+  --color-destructive: hsl(var(--danger));
+  --color-destructive-foreground: hsl(0 0% 100%);
 
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
   --font-display: var(--font-inter), sans-serif;

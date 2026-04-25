@@ -103,7 +103,7 @@ export function ContactClient() {
                       <Textarea placeholder="Tell us about your project..." className="bg-background/50 border-border/40 min-h-[120px]" {...register("message")} />
                       {errors.message && <p className="text-xs text-destructive">{errors.message.message}</p>}
                     </div>
-                    <Button type="submit" disabled={isLoading} className="w-full bg-primary hover:bg-primary/90 cursor-pointer h-10 shadow-[0_2px_8px_rgba(91,79,233,0.3)]">
+                    <Button type="submit" disabled={isLoading} className="w-full bg-primary hover:bg-primary/90 cursor-pointer h-10 shadow-[0_2px_8px_hsl(var(--brand)/0.3)]">
                       {isLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}Send Message
                     </Button>
                   </form>
