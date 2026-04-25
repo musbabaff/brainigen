@@ -118,7 +118,21 @@ function NavItem({
   if (collapsed) {
     return (
       <Tooltip>
-        <TooltipTrigger asChild>{link}</TooltipTrigger>
+        <TooltipTrigger
+          render={
+            <Link
+              href={item.href}
+              className={cn(
+                'flex items-center justify-center h-9 w-9 rounded-lg transition-all duration-150 cursor-pointer',
+                isActive
+                  ? 'bg-[hsl(var(--brand)/0.12)] text-[hsl(var(--brand))]'
+                  : 'text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))]'
+              )}
+            >
+              <Icon className="w-4 h-4 flex-shrink-0" />
+            </Link>
+          }
+        />
         <TooltipContent side="right" className="text-xs">{item.label}</TooltipContent>
       </Tooltip>
     );
@@ -198,15 +212,17 @@ export function DashboardSidebar({ profile }: { profile: { plan?: string } | nul
       <div className={cn('border-t border-[hsl(var(--border))] shrink-0', collapsed ? 'p-2' : 'p-3')}>
         {collapsed ? (
           <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                onClick={() => setCollapsed(false)}
-                className="h-9 w-9 flex items-center justify-center rounded-lg text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))] transition-colors cursor-pointer mx-auto"
-                aria-label="Expand sidebar"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </TooltipTrigger>
+            <TooltipTrigger
+              render={
+                <button
+                  onClick={() => setCollapsed(false)}
+                  className="h-9 w-9 flex items-center justify-center rounded-lg text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] hover:bg-[hsl(var(--surface-2))] transition-colors cursor-pointer mx-auto"
+                  aria-label="Expand sidebar"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              }
+            />
             <TooltipContent side="right" className="text-xs">Expand</TooltipContent>
           </Tooltip>
         ) : (
