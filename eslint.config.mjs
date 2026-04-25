@@ -8,11 +8,9 @@ const eslintConfig = defineConfig([
   {
     rules: {
       "react/no-unescaped-entities": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "react-hooks/exhaustive-deps": "off",
-      "react-hooks/purity": "off",
-      "react-hooks/rules-of-hooks": "off",
-      "react-hooks/set-state-in-effect": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
+      "react-hooks/exhaustive-deps": "warn",
+      "react-hooks/rules-of-hooks": "error",
       "@next/next/no-html-link-for-pages": "off"
     }
   },

@@ -1,0 +1,42 @@
+# Brainigen AI Agent Platform
+
+> Build, deploy, and scale intelligent AI agents for your business. Brainigen is an enterprise-grade platform for creating autonomous AI agents that automate customer support, sales, and operations.
+
+## Product
+
+- [Platform Overview](https://brainigen.com/product): AI agent builder, knowledge base, analytics, and integrations
+- [AI Agent Builder](https://brainigen.com/product/agents): Visual canvas for building AI agents without code
+- [Knowledge Base](https://brainigen.com/product/knowledge): RAG-powered document retrieval and semantic search
+- [Voice Agents](https://brainigen.com/product/voice): Voice-enabled agents for phone support with sub-second latency
+- [API Access](https://brainigen.com/product/api): Full REST API and SDK for developers
+- [Integrations](https://brainigen.com/product/integrations): 100+ native integrations with business tools
+
+## Solutions
+
+- [Customer Support](https://brainigen.com/solutions/customer-support): AI agents that resolve 80% of tickets autonomously
+- [Sales Automation](https://brainigen.com/solutions/sales): Lead qualification, outreach, and follow-up automation
+- [E-commerce](https://brainigen.com/solutions/ecommerce): Product recommendations and order management agents
+- [SaaS](https://brainigen.com/solutions/saas): Onboarding, support, and retention automation
+- [Healthcare](https://brainigen.com/solutions/healthcare): HIPAA-compliant patient communication agents
+
+## Pricing
+
+- [Pricing Plans](https://brainigen.com/pricing): Free, Starter ($29/mo), Pro ($99/mo), Enterprise (custom)
+
+## Documentation
+
+- [Quick Start](https://brainigen.com/docs/quickstart): Get started with Brainigen in 5 minutes
+- [API Reference](https://brainigen.com/product/api): Complete API documentation
+
+## Company
+
+- [About](https://brainigen.com/about): Founded in 2024, headquartered in Baku, Azerbaijan
+- [Blog](https://brainigen.com/blog): AI insights, tutorials, and product updates
+- [Changelog](https://brainigen.com/changelog): Latest product updates
+- [Careers](https://brainigen.com/careers): Join the Brainigen team
+
+## Security & Trust
+
+- [Security](https://brainigen.com/trust/security): SOC 2 Type II, GDPR, HIPAA compliance
+- [Privacy Policy](https://brainigen.com/privacy)
+- [Terms of Service](https://brainigen.com/terms)

@@ -23,8 +23,8 @@ export function generatePageMetadata({
   
   const url = `${baseUrl}${locale === 'en' ? '' : `/${locale}`}${cleanPath}`;
   
-  // Supported languages
-  const locales = ['en', 'de', 'es', 'fr', 'ja', 'pt', 'tr', 'zh'];
+  // Supported languages (must match src/messages/ directory)
+  const locales = ['en', 'tr', 'az', 'ru', 'de', 'es', 'fr', 'ar'];
   
   const languages: Record<string, string> = {};
   locales.forEach(l => {

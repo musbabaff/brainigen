@@ -1,3 +1,4 @@
+import { generatePageMetadata } from "@/lib/seo";
 import { SectionBoundary } from '@/components/shared/section-boundary';
 import { Hero } from '@/components/marketing/sections/hero';
 import { LogoCloud } from '@/components/marketing/sections/logo-cloud';
@@ -15,12 +16,26 @@ import { PricingPreview } from '@/components/marketing/sections/pricing-preview'
 import { SecurityBadges } from '@/components/marketing/sections/security-badges';
 import { FAQ } from '@/components/marketing/sections/faq';
 import { FinalCTA } from '@/components/marketing/sections/final-cta';
+import { OrganizationSchema, WebSiteSchema, SoftwareApplicationSchema } from "@/components/SEO/StructuredData";
 
 export const revalidate = 3600;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return generatePageMetadata({
+    title: "Brainigen — AI Agents That Think Ahead",
+    description: "Build, deploy, and scale intelligent AI agents for your business. Automate customer support, sales, and operations with Brainigen's enterprise-grade AI platform.",
+    path: "/",
+    locale,
+  });
+}
 
 export default function HomePage() {
   return (
     <>
+      <OrganizationSchema />
+      <WebSiteSchema />
+      <SoftwareApplicationSchema />
       <SectionBoundary name="hero"><Hero /></SectionBoundary>
       <SectionBoundary name="logos"><LogoCloud /></SectionBoundary>
       <SectionBoundary name="problem"><ProblemSolution /></SectionBoundary>
